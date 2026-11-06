@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRAXON Growth Agency — Enterprise Conversion Rate Optimization</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                            accent: '#10b981'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js for ROI Calculator Visuals -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #4f46e5 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Touch drag handle slider styling */
+        .before-after-container { position: relative; overflow: hidden; user-select: none; }
+        .after-image { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; width: 50%; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                    V
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">VRAXON</span>
+                    <span class="text-[10px] tracking-widest text-brand-600 dark:text-brand-accent font-semibold uppercase">Growth Agency</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-sm">
+                <a href="#services" class="hover:text-brand-600 dark:hover:text-brand-accent transition-colors" data-i18n="navServices">Services</a>
+                <a href="#methodology" class="hover:text-brand-600 dark:hover:text-brand-accent transition-colors" data-i18n="navMethodology">Methodology</a>
+                <a href="#toolkit" class="hover:text-brand-600 dark:hover:text-brand-accent transition-colors" data-i18n="navToolkit">CRO Toolkit</a>
+                <a href="#case-studies" class="hover:text-brand-600 dark:hover:text-brand-accent transition-colors" data-i18n="navCases">Case Studies</a>
+                <a href="#pricing" class="hover:text-brand-600 dark:hover:text-brand-accent transition-colors" data-i18n="navPricing">Pricing</a>
+            </nav>
+
+            <!-- Right Controls: Currency, Lang, Dark Mode & CTA -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                
+                <!-- Currency Selector -->
+                <button id="currency-toggle" onclick="toggleCurrency()" class="px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 text-xs font-bold bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                    <span id="currency-label">MAD (DH)</span>
+                </button>
+
+                <!-- Language Toggle -->
+                <button id="lang-toggle" onclick="toggleLanguage()" class="px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 text-xs font-bold bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1">
+                    <i class="fa-solid fa-globe text-brand-600 dark:text-brand-accent"></i>
+                    <span id="lang-label">FR</span>
+                </button>
+
+                <!-- Dark Mode Switcher -->
+                <button id="theme-toggle" onclick="toggleDarkMode()" class="p-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" aria-label="Toggle dark mode">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:inline"></i>
+                </button>
+
+                <!-- Primary Header CTA -->
+                <a href="#free-review" class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-xl text-white bg-brand-600 hover:bg-brand-700 dark:bg-brand-500 dark:hover:bg-brand-600 shadow-lg shadow-brand-500/25 transition-all hover:scale-[1.02]" data-i18n="navCta">
+                    Free CRO Review
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative py-20 lg:py-28 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-50 text-brand-700 dark:bg-brand-900/50 dark:text-brand-100 border border-brand-200 dark:border-brand-800 mb-6">
+                    <i class="fa-solid fa-chart-line text-brand-500"></i>
+                    <span data-i18n="heroBadge">Data-Driven E-Commerce CRO Agency</span>
+                </span>
+                
+                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6" data-i18n="heroTitle">
+                    Turn More Traffic Into <span class="gradient-text">Predictable Revenue</span>
+                </h1>
+                
+                <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto font-normal" data-i18n="heroSubtitle">
+                    We eliminate conversion friction, optimize user journeys, and scale net profits for high-growth e-commerce brands without increasing ad spend.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#free-review" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-white bg-brand-600 hover:bg-brand-700 dark:bg-brand-500 dark:hover:bg-brand-600 shadow-xl shadow-brand-500/30 transition-all hover:-translate-y-0.5 text-center" data-i18n="heroPrimaryCta">
+                        Get Your Free CRO Review
+                    </a>
+                    <a href="#services" class="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-center" data-i18n="heroSecondaryCta">
+                        Explore Our Services
+                    </a>
+                </div>
+
+                <!-- Trust Metrics Bar -->
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 pt-10 border-t border-slate-200 dark:border-slate-800">
+                    <div>
+                        <div class="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">+42%</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" data-i18n="metric1">Average CR Lift</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">$14.2M+</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" data-i18n="metric2">Tracked Client Revenue</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">250+</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" data-i18n="metric3">A/B Tests Conducted</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">98.4%</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" data-i18n="metric4">Client Retention Rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM SECTION: Core E-Commerce Friction Points -->
+    <section class="py-20 bg-slate-100 dark:bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4" data-i18n="problemHeading">Why Most E-Commerce Stores Lose 97% of Their Visitors</h2>
+                <p class="text-slate-600 dark:text-slate-400" data-i18n="problemSubheading">Driving traffic is expensive. If your store suffers from these 4 silent revenue killers, scaling paid ads only wastes your margin.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Friction 1 -->
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-950/50 text-red-600 dark:text-red-400 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-cart-arrow-down"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3" data-i18n="prob1Title">High Cart Abandonment</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="prob1Desc">Complicated checkout flows, unexpected fees, and missing trust badges cause 70%+ of shoppers to leave right before paying.</p>
+                </div>
+
+                <!-- Friction 2 -->
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3" data-i18n="prob2Title">Mobile Conversion Friction</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="prob2Desc">Slow load speeds, clumsy mobile navigation, and small touch targets erode conversions on smartphones where 80% of traffic lands.</p>
+                </div>
+
+                <!-- Friction 3 -->
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-eye-slash"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3" data-i18n="prob3Title">Weak Value Proposition</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="prob3Desc">Generic product copy and unclear key benefits fail to build immediate value, leading to high bounce rates within 5 seconds.</p>
+                </div>
+
+                <!-- Friction 4 -->
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-flask text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3" data-i18n="prob4Title">Guesswork Decision Making</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="prob4Desc">Redesigning based on intuition instead of analytics, heatmaps, and structured A/B testing usually breaks existing sales flows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CORE SERVICES SECTION -->
+    <section id="services" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-600 dark:text-brand-accent font-bold text-sm tracking-wider uppercase" data-i18n="servicesPre">What We Do</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 mb-4" data-i18n="servicesHeading">Engineered CRO Services for E-Commerce Scale</h2>
+                <p class="text-slate-600 dark:text-slate-400" data-i18n="servicesSubheading">From rapid audits to full-funnel experiment management, we provide data-backed solutions to unlock profit.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 flex flex-col justify-between hover:border-brand-500 transition">
+                    <div>
+                        <div class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-accent mb-2">Phase 1</div>
+                        <h3 class="text-2xl font-bold mb-4" data-i18n="s1Title">Comprehensive CRO Audit</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mb-6" data-i18n="s1Desc">A deep-dive analysis of your entire funnel to uncover friction points, usability flaws, and lost revenue opportunities.</p>
+                        
+                        <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s1f1">Full Analytics & Funnel Breakdown</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s1f2">Heatmap & Session Replay Analysis</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s1f3">UX & UI Heuristic Evaluation</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s1f4">Prioritized Action Roadmap (PIE Framework)</span></li>
+                        </ul>
+                    </div>
+                    <a href="#free-review" class="w-full text-center py-3 rounded-xl border border-slate-300 dark:border-slate-700 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="s1Cta">Request Audit</a>
+                </div>
+
+                <!-- Service 2 (Featured) -->
+                <div class="bg-gradient-to-b from-brand-900 to-slate-900 text-white rounded-2xl p-8 flex flex-col justify-between shadow-2xl relative border border-brand-500/50">
+                    <span class="absolute -top-3 right-6 bg-brand-accent text-slate-950 font-bold text-[11px] uppercase tracking-widest px-3 py-1 rounded-full" data-i18n="s2Badge">Most Popular</span>
+                    <div>
+                        <div class="text-xs font-bold uppercase tracking-wider text-brand-accent mb-2">Phase 2</div>
+                        <h3 class="text-2xl font-bold mb-4" data-i18n="s2Title">CRO Implementation</h3>
+                        <p class="text-sm text-slate-300 mb-6" data-i18n="s2Desc">Turn audit insights into reality with turn-key design, copywriting, and technical deployment directly on your store.</p>
+                        
+                        <ul class="space-y-3 text-sm text-slate-200 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s2f1">High-Converting PDP & Checkout Wireframes</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s2f2">Custom Mobile-First UX Redesign</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s2f3">Shopify / WooCommerce Frontend Dev</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s2f4">Speed & Core Web Vitals Optimization</span></li>
+                        </ul>
+                    </div>
+                    <a href="#free-review" class="w-full text-center py-3 rounded-xl bg-brand-accent text-slate-950 font-bold hover:bg-emerald-400 transition" data-i18n="s2Cta">Start Implementation</a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 flex flex-col justify-between hover:border-brand-500 transition">
+                    <div>
+                        <div class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-accent mb-2">Phase 3</div>
+                        <h3 class="text-2xl font-bold mb-4" data-i18n="s3Title">Monthly Growth Retainer</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mb-6" data-i18n="s3Desc">Continuous experimentation, hypothesis testing, and conversion rate optimization to scale lifetime profits.</p>
+                        
+                        <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s3f1">Continuous A/B & Multivariate Testing</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s3f2">Personalization & Segmentation Strategy</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s3f3">Weekly Analytics Reports & Strategic Calls</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> <span data-i18n="s3f4">Dedicated CRO Strategist & Engineers</span></li>
+                        </ul>
+                    </div>
+                    <a href="#free-review" class="w-full text-center py-3 rounded-xl border border-slate-300 dark:border-slate-700 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="s3Cta">Explore Retainer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- METHODOLOGY: VRAXON GROWTH SYSTEM™ -->
+    <section id="methodology" class="py-20 bg-slate-100 dark:bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-600 dark:text-brand-accent font-bold text-sm tracking-wider uppercase">Our Framework</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 mb-4" data-i18n="methodHeading">The VRAXON GROWTH SYSTEM™</h2>
+                <p class="text-slate-600 dark:text-slate-400" data-i18n="methodSubheading">A rigorous 5-step scientific methodology designed to eliminate guesswork and deliver measurable ROI.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <!-- Step 1 -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center relative">
+                    <div class="w-8 h-8 rounded-full bg-brand-600 text-white font-black text-sm flex items-center justify-center mx-auto mb-4">1</div>
+                    <h4 class="font-bold mb-2 text-base" data-i18n="m1Title">Diagnose</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="m1Desc">Audit analytics, event tracking, heatmaps, and user recordings.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center relative">
+                    <div class="w-8 h-8 rounded-full bg-brand-600 text-white font-black text-sm flex items-center justify-center mx-auto mb-4">2</div>
+                    <h4 class="font-bold mb-2 text-base" data-i18n="m2Title">Identify</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="m2Desc">Pinpoint major friction points and form data-driven hypotheses.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center relative">
+                    <div class="w-8 h-8 rounded-full bg-brand-600 text-white font-black text-sm flex items-center justify-center mx-auto mb-4">3</div>
+                    <h4 class="font-bold mb-2 text-base" data-i18n="m3Title">Strategize</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="m3Desc">Prioritize tests based on Potential, Importance, and Ease (PIE).</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center relative">
+                    <div class="w-8 h-8 rounded-full bg-brand-600 text-white font-black text-sm flex items-center justify-center mx-auto mb-4">4</div>
+                    <h4 class="font-bold mb-2 text-base" data-i18n="m4Title">Optimize</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="m4Desc">Design, code, and deploy controlled A/B experiments.</p>
+                </div>
+                <!-- Step 5 -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center relative">
+                    <div class="w-8 h-8 rounded-full bg-brand-accent text-slate-950 font-black text-sm flex items-center justify-center mx-auto mb-4">5</div>
+                    <h4 class="font-bold mb-2 text-base" data-i18n="m5Title">Measure</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="m5Desc">Analyze statistical significance, deploy winners, and iterate.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDIES SECTION -->
+    <section id="case-studies" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-600 dark:text-brand-accent font-bold text-sm tracking-wider uppercase" data-i18n="casesPre">Proven Impact</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 mb-4" data-i18n="casesHeading">Real Results for Real Stores</h2>
+                <p class="text-slate-600 dark:text-slate-400" data-i18n="casesSubheading">See how our CRO methodology transforms conversion rates and drives bottom-line growth.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Case Study 1 -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-accent uppercase tracking-wider">Fashion & Apparel E-Commerce</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400">+53.4% Revenue</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" data-i18n="cs1Title">High-End Fashion Brand Re-Architects Mobile PDP</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mb-6" data-i18n="cs1Desc">Simplified image galleries, added sticky add-to-cart buttons, and streamlined checkout trust signals.</p>
+                        
+                        <div class="grid grid-cols-3 gap-2 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl text-center">
+                            <div>
+                                <div class="text-xs text-slate-400" data-i18n="csMetricCR">CR Lift</div>
+                                <div class="font-black text-slate-900 dark:text-white text-base">+38.2%</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400" data-i18n="csMetricAOV">AOV Increase</div>
+                                <div class="font-black text-slate-900 dark:text-white text-base">+12.5%</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400" data-i18n="csMetricAbandon">Cart Drop</div>
+                                <div class="font-black text-slate-900 dark:text-white text-base">-24.0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 2 -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-accent uppercase tracking-wider">Health & Beauty Store</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400">+64.1% CR Lift</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3" data-i18n="cs2Title">Supplement Store Optimizes Checkout Funnel</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mb-6" data-i18n="cs2Desc">Replaced multi-page checkout with a single-step accordion and integrated instant social proof reviews.</p>
+                        
+                        <div class="grid grid-cols-3 gap-2 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl text-center">
+                            <div>
+                                <div class="text-xs text-slate-400" data-i18n="csMetricCR">CR Lift</div>
+                                <div class="font-black text-slate-900 dark:text-white text-base">+64.1%</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400" data-i18n="csMetricAOV">AOV Increase</div>
+                                <div class="font-black text-slate-900 dark:text-white text-base">+18.0%</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400" data-i18n="csMetricAbandon">Cart Drop</div>
+                                <div class="font-black text-slate-900 dark:text-white text-base">-31.5%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE CRO TOOLKIT SECTION -->
+    <section id="toolkit" class="py-20 bg-slate-100 dark:bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-600 dark:text-brand-accent font-bold text-sm tracking-wider uppercase" data-i18n="toolPre">Interactive Suite</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 mb-4" data-i18n="toolHeading">Interactive CRO Demonstration Tools</h2>
+                <p class="text-slate-600 dark:text-slate-400" data-i18n="toolSubheading">Experience our diagnostic tools firsthand. Test the slider, simulate heatmaps, and project your ROI.</p>
+            </div>
+
+            <!-- TOOLKIT TABS / LAYOUT -->
+            <div class="space-y-16">
+                
+                <!-- TOOL 1: BEFORE / AFTER UX SPLITTER VISUALIZER -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8">
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-brand-600 dark:text-brand-accent"></i>
+                        <span data-i18n="t1Title">Before vs After UX Architecture Visualizer</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-6" data-i18n="t1Desc">Drag the handle to see how VRAXON re-architects low-converting layouts into optimized, frictionless stores.</p>
+
+                    <div id="before-after-slider" class="before-after-container w-full h-80 sm:h-96 rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 relative">
+                        <!-- Before Visual (Underneath) -->
+                        <div class="w-full h-full bg-slate-800 text-white p-6 flex flex-col justify-between select-none">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-red-500/20 text-red-400 border border-red-500/40 text-xs font-bold px-3 py-1 rounded-full uppercase" data-i18n="baBefore">BEFORE (1.2% CR)</span>
+                                <span class="text-xs text-slate-400">Standard E-Com Store</span>
+                            </div>
+                            <div class="space-y-3 opacity-60">
+                                <div class="h-4 bg-slate-600 rounded w-1/3"></div>
+                                <div class="h-8 bg-slate-700 rounded w-2/3"></div>
+                                <div class="h-12 bg-red-900/40 border border-red-500/30 rounded flex items-center px-4 text-xs text-red-300" data-i18n="baFrictionText">Cluttered navigation & hidden call-to-actions</div>
+                                <div class="h-24 bg-slate-700/50 rounded"></div>
+                            </div>
+                            <div class="text-xs text-slate-400" data-i18n="baNote1">High drop-off rate, no trust badges, slow mobile response</div>
+                        </div>
+
+                        <!-- After Visual (Overlaid & clipped width) -->
+                        <div id="after-panel" class="after-image bg-slate-950 text-white p-6 flex flex-col justify-between border-r-2 border-brand-accent select-none">
+                            <div class="flex justify-between items-center w-full min-w-[300px]">
+                                <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-bold px-3 py-1 rounded-full uppercase" data-i18n="baAfter">AFTER (3.8% CR)</span>
+                                <span class="text-xs text-emerald-400 font-semibold" data-i18n="baOptimized">VRAXON Optimized</span>
+                            </div>
+                            <div class="space-y-3 w-full min-w-[300px]">
+                                <div class="h-4 bg-brand-accent/40 rounded w-1/2"></div>
+                                <div class="h-10 bg-brand-600 rounded w-full flex items-center justify-center font-bold text-xs" data-i18n="baStickyButton">1-CLICK EXPRESS CHECKOUT</div>
+                                <div class="h-10 bg-emerald-950/60 border border-emerald-500/40 rounded flex items-center px-4 text-xs text-emerald-300 gap-2">
+                                    <i class="fa-solid fa-shield-halved text-brand-accent"></i>
+                                    <span data-i18n="baTrustSignals">Guaranteed 24-hr Shipping & 30-Day Money Back</span>
+                                </div>
+                                <div class="h-16 bg-slate-800 rounded p-2 flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded bg-brand-500/30 flex items-center justify-center font-bold text-xs">★ 4.9</div>
+                                    <div class="text-[11px] text-slate-300" data-i18n="baReviews">1,420+ Verified Customer Reviews</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-emerald-400 font-medium min-w-[300px]" data-i18n="baNote2">Frictionless UX, sticky bar, social proof & fast checkout</div>
+                        </div>
+
+                        <!-- Drag Handle -->
+                        <div id="drag-handle" class="absolute top-0 bottom-0 w-8 -ml-4 flex items-center justify-center cursor-ew-resize z-20" style="left: 50%;">
+                            <div class="w-8 h-8 rounded-full bg-brand-accent text-slate-950 shadow-lg flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-code-compare"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOOL 2: INTERACTIVE ROI & NET PROFIT CALCULATOR -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8">
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-calculator text-brand-600 dark:text-brand-accent"></i>
+                        <span data-i18n="t2Title">E-Commerce ROI & Net Profit Lift Calculator</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-8" data-i18n="t2Desc">Adjust your store metrics to project monthly revenue expansion with VRAXON CRO.</p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <!-- Inputs -->
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-xs font-bold mb-2">
+                                    <span data-i18n="calcTraffic">Monthly Visitors</span>
+                                    <span id="val-traffic" class="text-brand-600 dark:text-brand-accent">50,000</span>
+                                </div>
+                                <input type="range" id="input-traffic" min="5000" max="500000" step="5000" value="50000" class="w-full accent-brand-600">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-bold mb-2">
+                                    <span data-i18n="calcCR">Current Conversion Rate (%)</span>
+                                    <span id="val-cr" class="text-brand-600 dark:text-brand-accent">1.5%</span>
+                                </div>
+                                <input type="range" id="input-cr" min="0.5" max="5.0" step="0.1" value="1.5" class="w-full accent-brand-600">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-bold mb-2">
+                                    <span data-i18n="calcAOV">Average Order Value (AOV)</span>
+                                    <span id="val-aov" class="text-brand-600 dark:text-brand-accent">$60</span>
+                                </div>
+                                <input type="range" id="input-aov" min="10" max="500" step="5" value="60" class="w-full accent-brand-600">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-bold mb-2">
+                                    <span data-i18n="calcLift">Expected CRO Lift (+%)</span>
+                                    <span id="val-lift" class="text-brand-accent font-extrabold">+30%</span>
+                                </div>
+                                <input type="range" id="input-lift" min="10" max="100" step="5" value="30" class="w-full accent-brand-accent">
+                            </div>
+                        </div>
+
+                        <!-- Graph & Metrics Display -->
+                        <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-800 space-y-6">
+                            <div class="grid grid-cols-2 gap-4 text-center">
+                                <div class="p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
+                                    <div class="text-xs text-slate-400 mb-1" data-i18n="calcCurrRev">Current Monthly Rev</div>
+                                    <div id="display-curr-rev" class="text-lg font-bold text-slate-700 dark:text-slate-300">$45,000</div>
+                                </div>
+                                <div class="p-4 bg-brand-50 dark:bg-brand-950/60 rounded-lg border border-brand-200 dark:border-brand-800">
+                                    <div class="text-xs text-brand-600 dark:text-brand-accent mb-1" data-i18n="calcProjectedRev">Projected Monthly Rev</div>
+                                    <div id="display-proj-rev" class="text-xl font-extrabold text-brand-600 dark:text-brand-accent">$58,500</div>
+                                </div>
+                            </div>
+
+                            <div class="text-center p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
+                                <span class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold" data-i18n="calcAddedRev">Additional Net Monthly Revenue: </span>
+                                <span id="display-net-gain" class="font-extrabold text-emerald-600 dark:text-emerald-400 text-base">+$13,500/mo</span>
+                            </div>
+
+                            <div class="h-48 relative">
+                                <canvas id="roiChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOOL 3: HEATMAP & ANALYTICS SIMULATOR -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8">
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-fire text-brand-600 dark:text-brand-accent"></i>
+                        <span data-i18n="t3Title">Heatmap & Visitor Behavior Simulator</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-6" data-i18n="t3Desc">Switch between diagnostic heatmaps to see how we track user drop-offs and rage clicks.</p>
+
+                    <!-- Tabs -->
+                    <div class="flex border-b border-slate-200 dark:border-slate-800 mb-6 gap-2">
+                        <button onclick="setHeatmapTab('click')" id="tab-click" class="py-2 px-4 text-xs font-bold border-b-2 border-brand-600 text-brand-600 dark:text-brand-accent" data-i18n="hmTabClick">Click Heatmap</button>
+                        <button onclick="setHeatmapTab('scroll')" id="tab-scroll" class="py-2 px-4 text-xs font-bold text-slate-500 border-b-2 border-transparent hover:text-slate-800 dark:hover:text-slate-200" data-i18n="hmTabScroll">Scrollmap</button>
+                        <button onclick="setHeatmapTab('dropoff')" id="tab-dropoff" class="py-2 px-4 text-xs font-bold text-slate-500 border-b-2 border-transparent hover:text-slate-800 dark:hover:text-slate-200" data-i18n="hmTabDrop">Drop-off Points</button>
+                    </div>
+
+                    <!-- Visual Box -->
+                    <div id="heatmap-screen" class="relative h-64 rounded-xl border border-slate-300 dark:border-slate-700 overflow-hidden flex items-center justify-center p-6 bg-slate-950 text-white">
+                        <div id="heatmap-content" class="text-center space-y-4 max-w-md">
+                            <span id="hm-badge" class="px-3 py-1 rounded-full text-[10px] font-bold uppercase bg-red-500/20 text-red-400 border border-red-500/40">Rage Click Hotspot Detected</span>
+                            <h4 id="hm-title" class="font-bold text-lg">74% of Clicks Hitting Unclickable Image Banner</h4>
+                            <p id="hm-desc" class="text-xs text-slate-400">Users expect the promo graphic to open the product link directly. Adding link triggers instantly captures lost intent.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOOL 4: DYNAMIC SCOPE BUILDER & PRICE ESTIMATOR -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8">
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-brand-600 dark:text-brand-accent"></i>
+                        <span data-i18n="t4Title">Custom CRO Scope & Timeline Builder</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-6" data-i18n="t4Desc">Select your desired optimizations to build your custom project scope and estimate delivery duration.</p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 space-y-3">
+                            <label class="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" checked class="scope-item w-4 h-4 accent-brand-600" data-price-mad="4500" data-price-usd="450" data-days="5" onchange="updateScopeTotal()">
+                                    <span class="text-sm font-semibold" data-i18n="scope1">Full Funnel Mobile UX Audit</span>
+                                </div>
+                                <span class="text-xs font-bold text-brand-600 dark:text-brand-accent scope-price-tag">+4,500 DH</span>
+                            </label>
+
+                            <label class="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" checked class="scope-item w-4 h-4 accent-brand-600" data-price-mad="6000" data-price-usd="600" data-days="7" onchange="updateScopeTotal()">
+                                    <span class="text-sm font-semibold" data-i18n="scope2">High-Converting PDP & Cart Wireframes</span>
+                                </div>
+                                <span class="text-xs font-bold text-brand-600 dark:text-brand-accent scope-price-tag">+6,000 DH</span>
+                            </label>
+
+                            <label class="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" class="scope-item w-4 h-4 accent-brand-600" data-price-mad="5000" data-price-usd="500" data-days="4" onchange="updateScopeTotal()">
+                                    <span class="text-sm font-semibold" data-i18n="scope3">Shopify/WooCommerce Frontend Coding</span>
+                                </div>
+                                <span class="text-xs font-bold text-brand-600 dark:text-brand-accent scope-price-tag">+5,000 DH</span>
+                            </label>
+
+                            <label class="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition">
+                                <div class="flex items-center gap-3">
+                                    <input type="checkbox" class="scope-item w-4 h-4 accent-brand-600" data-price-mad="3500" data-price-usd="350" data-days="3" onchange="updateScopeTotal()">
+                                    <span class="text-sm font-semibold" data-i18n="scope4">Checkout Speed & Core Web Vitals Fix</span>
+                                </div>
+                                <span class="text-xs font-bold text-brand-600 dark:text-brand-accent scope-price-tag">+3,500 DH</span>
+                            </label>
+                        </div>
+
+                        <!-- Scope Summary Box -->
+                        <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" data-i18n="scopeSummaryTitle">Estimated Project Scope</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="text-xs text-slate-500 dark:text-slate-400" data-i18n="scopeEstTimeline">Delivery Timeline</div>
+                                        <div id="scope-timeline" class="text-xl font-bold text-slate-900 dark:text-white">12 Business Days</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-slate-500 dark:text-slate-400" data-i18n="scopeEstInvestment">Total Estimated Investment</div>
+                                        <div id="scope-total-price" class="text-3xl font-black text-brand-600 dark:text-brand-accent">10,500 DH</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#free-review" onclick="presetScopeInForm()" class="w-full mt-6 text-center py-3 rounded-xl bg-brand-600 text-white font-bold hover:bg-brand-700 transition" data-i18n="scopeBtn">Lock In This Scope</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- DUAL-CURRENCY PRICING SECTION -->
+    <section id="pricing" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-600 dark:text-brand-accent font-bold text-sm tracking-wider uppercase" data-i18n="pricingPre">Transparent Investment</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 mb-4" data-i18n="pricingHeading">Simple, Scalable Pricing Tiers</h2>
+                <p class="text-slate-600 dark:text-slate-400" data-i18n="pricingSubheading">Select the level of partnership that fits your store's stage. Rates update dynamically based on currency preference.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Tier 1 -->
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="p1Title">Quick Friction Audit</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-6" data-i18n="p1Desc">For stores wanting immediate wins and UX feedback.</p>
+                        <div class="text-3xl font-black mb-1 p-price" data-mad="3,500 DH" data-usd="$350">$350</div>
+                        <div class="text-[10px] text-slate-400 mb-6" data-i18n="pricingStarting">Starting flat rate</div>
+                        
+                        <ul class="space-y-3 text-xs text-slate-700 dark:text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> 10-Point Mobile UX Audit</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Video Breakdown (20 mins)</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Top 5 Priority Action List</li>
+                        </ul>
+                    </div>
+                    <button onclick="openModalWithPlan('Quick Friction Audit')" class="w-full py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 text-xs transition" data-i18n="planSelect">Select Plan</button>
+                </div>
+
+                <!-- Tier 2 -->
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="p2Title">Full CRO Deep-Dive</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-6" data-i18n="p2Desc">Comprehensive end-to-end analysis & wireframes.</p>
+                        <div class="text-3xl font-black mb-1 p-price" data-mad="9,500 DH" data-usd="$950">$950</div>
+                        <div class="text-[10px] text-slate-400 mb-6" data-i18n="pricingStarting">Starting flat rate</div>
+
+                        <ul class="space-y-3 text-xs text-slate-700 dark:text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Complete Funnel & Heatmaps</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Mobile & Desktop Figma Redesigns</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Full PIE Prioritization Strategy</li>
+                        </ul>
+                    </div>
+                    <button onclick="openModalWithPlan('Full CRO Deep-Dive')" class="w-full py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 text-xs transition" data-i18n="planSelect">Select Plan</button>
+                </div>
+
+                <!-- Tier 3 (Featured) -->
+                <div class="bg-gradient-to-b from-brand-900 to-slate-900 text-white p-8 rounded-2xl flex flex-col justify-between border border-brand-500 shadow-xl relative">
+                    <span class="absolute -top-3 right-6 bg-brand-accent text-slate-950 font-extrabold text-[10px] uppercase px-3 py-1 rounded-full" data-i18n="p3Badge">Recommended</span>
+                    <div>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="p3Title">Turn-Key Implementation</h3>
+                        <p class="text-xs text-slate-300 mb-6" data-i18n="p3Desc">Full audit + custom store frontend development.</p>
+                        <div class="text-3xl font-black mb-1 p-price" data-mad="18,000 DH" data-usd="$1,800">$1,800</div>
+                        <div class="text-[10px] text-slate-400 mb-6" data-i18n="pricingStarting">Starting flat rate</div>
+
+                        <ul class="space-y-3 text-xs text-slate-200 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Audit + Redesign + Coding</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Speed & Web Vitals Guarantee</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> QA Testing Across 15+ Devices</li>
+                        </ul>
+                    </div>
+                    <button onclick="openModalWithPlan('Turn-Key Implementation')" class="w-full py-2.5 rounded-xl bg-brand-accent text-slate-950 font-bold hover:bg-emerald-400 text-xs transition" data-i18n="planSelect">Select Plan</button>
+                </div>
+
+                <!-- Tier 4 -->
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="p4Title">Growth Retainer</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-6" data-i18n="p4Desc">Continuous experimentation and scaling partnership.</p>
+                        <div class="text-3xl font-black mb-1 p-price" data-mad="25,000 DH/mo" data-usd="$2,500/mo">$2,500/mo</div>
+                        <div class="text-[10px] text-slate-400 mb-6" data-i18n="pricingStarting">Starting monthly rate</div>
+
+                        <ul class="space-y-3 text-xs text-slate-700 dark:text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> 2-4 A/B Tests Managed / Month</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Dedicated CRO Engineer & Designer</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Weekly Executive Strategy Sync</li>
+                        </ul>
+                    </div>
+                    <button onclick="openModalWithPlan('Growth Retainer')" class="w-full py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 text-xs transition" data-i18n="planSelect">Select Plan</button>
+                </div>
+            </div>
+
+            <!-- Starting Rates Disclaimer -->
+            <div class="mt-8 text-center text-xs text-slate-500 dark:text-slate-400" data-i18n="pricingDisclaimer">
+                * Note: All pricing listed represents starting rates. Final scope and investment are finalized after store volume and technical audit evaluation.
+            </div>
+        </div>
+    </section>
+
+    <!-- 9-FIELD LEAD CAPTURE FORM SECTION (EMAIL DISPATCH) -->
+    <section id="free-review" class="py-20 bg-slate-100 dark:bg-slate-900/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 sm:p-12 shadow-xl">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-accent mb-3 inline-block">Free Audit Request</span>
+                    <h2 class="text-3xl font-extrabold" data-i18n="formTitle">Claim Your Free CRO Video Review</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2" data-i18n="formSubtitle">Our senior strategists will analyze your store and send a custom 15-minute video teardown within 48 hours.</p>
+                </div>
+
+                <form id="cro-review-form" onsubmit="handleLeadSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Field 1: Full Name -->
+                        <div>
+                            <label class="block text-xs font-bold mb-2" data-i18n="fName">Full Name *</label>
+                            <input type="text" id="lead-name" required placeholder="John Doe" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent text-sm focus:outline-none focus:border-brand-600">
+                        </div>
+
+                        <!-- Field 2: Work Email -->
+                        <div>
+                            <label class="block text-xs font-bold mb-2" data-i18n="fEmail">Work Email *</label>
+                            <input type="email" id="lead-email" required placeholder="john@yourbrand.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent text-sm focus:outline-none focus:border-brand-600">
+                        </div>
+
+                        <!-- Field 3: Phone / WhatsApp -->
+                        <div>
+                            <label class="block text-xs font-bold mb-2" data-i18n="fPhone">Phone / WhatsApp Number *</label>
+                            <input type="tel" id="lead-phone" required placeholder="+212 600-000000" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent text-sm focus:outline-none focus:border-brand-600">
+                        </div>
+
+                        <!-- Field 4: Store Website URL -->
+                        <div>
+                            <label class="block text-xs font-bold mb-2" data-i18n="fUrl">Store Website URL *</label>
+                            <input type="url" id="lead-url" required placeholder="https://yourbrand.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent text-sm focus:outline-none focus:border-brand-600">
+                        </div>
+
+                        <!-- Field 5: E-Commerce Platform -->
+                        <div>
+                            <label class="block text-xs font-bold mb-2" data-i18n="fPlatform">E-Commerce Platform *</label>
+                            <select id="lead-platform" required class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:border-brand-600">
+                                <option value="Shopify">Shopify / Shopify Plus</option>
+                                <option value="WooCommerce">WooCommerce</option>
+                                <option value="Custom / Other">Custom / Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Field 6: Monthly Traffic Volume -->
+                        <div>
+                            <label class="block text-xs font-bold mb-2" data-i18n="fTraffic">Monthly Visitors *</label>
+                            <select id="lead-traffic" required class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:border-brand-600">
+                                <option value="Under 10k">Under 10,000 visitors</option>
+                                <option value="10k - 50k">10,000 - 50,000 visitors</option>
+                                <option value="50k - 200k">50,000 - 200,000 visitors</option>
+                                <option value="200k+">200,000+ visitors</option>
+                            </select>
+                        </div>
+
+                        <!-- Field 7: Monthly Store Revenue -->
+                        <div>
+                            <label class="block text-xs font-bold mb-2" data-i18n="fRevenue">Monthly Revenue *</label>
+                            <select id="lead-revenue" required class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:border-brand-600">
+                                <option value="Under $10k">Under $10,000 / 100k DH</option>
+                                <option value="$10k - $50k">$10,000 - $50,000 / 100k - 500k DH</option>
+                                <option value="$50k - $200k">$50,000 - $200,000 / 500k - 2M DH</option>
+                                <option value="$200k+">$200,000+ / 2M+ DH</option>
+                            </select>
+                        </div>
+
+                        <!-- Field 8: Primary Growth Objective -->
+                        <div>
+                            <label class="block text-xs font-bold mb-2" data-i18n="fObjective">Primary Goal *</label>
+                            <select id="lead-objective" required class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:border-brand-600">
+                                <option value="Increase Conversion Rate">Increase Conversion Rate (CR)</option>
+                                <option value="Increase Average Order Value">Increase Average Order Value (AOV)</option>
+                                <option value="Reduce Cart Abandonment">Reduce Checkout Abandonment</option>
+                                <option value="Full Store Redesign">Full Funnel Redesign</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Field 9: Biggest Conversion Challenge / Notes -->
+                    <div>
+                        <label class="block text-xs font-bold mb-2" data-i18n="fChallenge">Current Biggest Conversion Bottleneck</label>
+                        <textarea id="lead-challenge" rows="3" placeholder="Tell us about your biggest friction point or specific goals..." class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent text-sm focus:outline-none focus:border-brand-600"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 rounded-xl bg-brand-600 hover:bg-brand-700 dark:bg-brand-500 dark:hover:bg-brand-600 text-white font-extrabold shadow-lg shadow-brand-500/30 transition text-sm uppercase tracking-wider" data-i18n="formSubmitBtn">
+                        Submit Audit Request via Email
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 py-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <!-- Brand Info -->
+                <div class="space-y-4 md:col-span-1">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-black">V</div>
+                        <span class="font-extrabold text-white text-lg tracking-tight">VRAXON</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed" data-i18n="footerTagline">Enterprise CRO & E-Commerce Profit Scaling Agency. Driving data-backed growth for high-performing online stores.</p>
+                </div>
+
+                <!-- Direct Contact Details -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-extrabold text-white uppercase tracking-wider" data-i18n="footerContactHeading">Contact Us</h4>
+                    <div class="text-xs space-y-2">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-brand-accent"></i>
+                            <a href="mailto:contact.vraxoncro@gmail.com" class="hover:text-white transition">contact.vraxoncro@gmail.com</a>
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                            <a href="https://wa.me/212765546116" target="_blank" class="hover:text-white transition">+212 765-546116</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Social Links -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-extrabold text-white uppercase tracking-wider" data-i18n="footerSocialHeading">Follow Us</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="https://instagram.com" target="_blank" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-slate-700 transition"><i class="fa-brands fa-instagram text-xs"></i></a>
+                        <a href="https://facebook.com" target="_blank" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-slate-700 transition"><i class="fa-brands fa-facebook-f text-xs"></i></a>
+                        <a href="https://linkedin.com" target="_blank" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-slate-700 transition"><i class="fa-brands fa-linkedin-in text-xs"></i></a>
+                        <a href="https://x.com" target="_blank" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-slate-700 transition"><i class="fa-brands fa-x-twitter text-xs"></i></a>
+                        <a href="https://tiktok.com" target="_blank" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-slate-700 transition"><i class="fa-brands fa-tiktok text-xs"></i></a>
+                    </div>
+                </div>
+
+                <!-- Legal Policies -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-extrabold text-white uppercase tracking-wider" data-i18n="footerLegalHeading">Legal</h4>
+                    <ul class="text-xs space-y-2">
+                        <li><button onclick="openPolicyModal('privacy')" class="hover:text-white transition" data-i18n="footerPrivacy">Privacy Policy</button></li>
+                        <li><button onclick="openPolicyModal('terms')" class="hover:text-white transition" data-i18n="footerTerms">Terms of Service</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-slate-900 text-center text-[11px] text-slate-500">
+                © <span id="year"></span> VRAXON Growth Agency. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- SUCCESS NOTIFICATION MODAL -->
+    <div id="success-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 max-w-md w-full text-center space-y-4 shadow-2xl">
+            <div class="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-500 flex items-center justify-center text-2xl mx-auto">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-xl font-bold" data-i18n="modalSuccTitle">Request Received!</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400" data-i18n="modalSuccBody">Your audit details have been dispatched to <strong>contact.vraxoncro@gmail.com</strong>. Our team will contact you within 48 hours.</p>
+            <button onclick="closeSuccessModal()" class="w-full py-3 rounded-xl bg-brand-600 text-white font-bold text-xs uppercase" data-i18n="modalClose">Close Window</button>
+        </div>
+    </div>
+
+    <!-- PLAN SELECT / QUICK AUDIT MODAL -->
+    <div id="plan-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 max-w-lg w-full space-y-4 shadow-2xl relative">
+            <button onclick="closePlanModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 id="plan-modal-title" class="text-xl font-bold">Select Plan Audit</h3>
+            <p class="text-xs text-slate-500" data-i18n="planModalSub">Enter your store details to finalize request dispatch.</p>
+            
+            <form onsubmit="handlePlanSubmit(event)" class="space-y-4">
+                <input type="hidden" id="selected-plan-input">
+                <div>
+                    <label class="block text-xs font-bold mb-1">Your Name *</label>
+                    <input type="text" id="plan-name" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Store Website URL *</label>
+                    <input type="url" id="plan-url" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Email Address *</label>
+                    <input type="email" id="plan-email" required class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent text-sm">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl bg-brand-600 text-white font-bold text-xs uppercase tracking-wider" data-i18n="planModalSubmit">Submit Plan Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LEGAL POLICY MODAL -->
+    <div id="policy-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 max-w-2xl w-full space-y-4 shadow-2xl relative max-h-[80vh] overflow-y-auto">
+            <button onclick="closePolicyModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 id="policy-modal-title" class="text-xl font-bold">Legal Policy</h3>
+            <div id="policy-modal-body" class="text-xs text-slate-600 dark:text-slate-400 space-y-3 leading-relaxed"></div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT: LOCALIZATION, CALCULATOR, AND TOOLKIT INTERACTIVITY -->
+    <script>
+        // Set Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 1. DICTIONARY FOR STRICT BILINGUAL ISOLATION (EN / FR)
+        const i18n = {
+            en: {
+                navServices: "Services",
+                navMethodology: "Methodology",
+                navToolkit: "CRO Toolkit",
+                navCases: "Case Studies",
+                navPricing: "Pricing",
+                navCta: "Free CRO Review",
+                heroBadge: "Data-Driven E-Commerce CRO Agency",
+                heroTitle: "Turn More Traffic Into Predictable Revenue",
+                heroSubtitle: "We eliminate conversion friction, optimize user journeys, and scale net profits for high-growth e-commerce brands without increasing ad spend.",
+                heroPrimaryCta: "Get Your Free CRO Review",
+                heroSecondaryCta: "Explore Our Services",
+                metric1: "Average CR Lift",
+                metric2: "Tracked Client Revenue",
+                metric3: "A/B Tests Conducted",
+                metric4: "Client Retention Rate",
+                problemHeading: "Why Most E-Commerce Stores Lose 97% of Their Visitors",
+                problemSubheading: "Driving traffic is expensive. If your store suffers from these 4 silent revenue killers, scaling paid ads only wastes your margin.",
+                prob1Title: "High Cart Abandonment",
+                prob1Desc: "Complicated checkout flows, unexpected fees, and missing trust badges cause 70%+ of shoppers to leave right before paying.",
+                prob2Title: "Mobile Conversion Friction",
+                prob2Desc: "Slow load speeds, clumsy mobile navigation, and small touch targets erode conversions on smartphones where 80% of traffic lands.",
+                prob3Title: "Weak Value Proposition",
+                prob3Desc: "Generic product copy and unclear key benefits fail to build immediate value, leading to high bounce rates within 5 seconds.",
+                prob4Title: "Guesswork Decision Making",
+                prob4Desc: "Redesigning based on intuition instead of analytics, heatmaps, and structured A/B testing usually breaks existing sales flows.",
+                servicesPre: "What We Do",
+                servicesHeading: "Engineered CRO Services for E-Commerce Scale",
+                servicesSubheading: "From rapid audits to full-funnel experiment management, we provide data-backed solutions to unlock profit.",
+                s1Title: "Comprehensive CRO Audit",
+                s1Desc: "A deep-dive analysis of your entire funnel to uncover friction points, usability flaws, and lost revenue opportunities.",
+                s1f1: "Full Analytics & Funnel Breakdown",
+                s1f2: "Heatmap & Session Replay Analysis",
+                s1f3: "UX & UI Heuristic Evaluation",
+                s1f4: "Prioritized Action Roadmap (PIE Framework)",
+                s1Cta: "Request Audit",
+                s2Badge: "Most Popular",
+                s2Title: "CRO Implementation",
+                s2Desc: "Turn audit insights into reality with turn-key design, copywriting, and technical deployment directly on your store.",
+                s2f1: "High-Converting PDP & Checkout Wireframes",
+                s2f2: "Custom Mobile-First UX Redesign",
+                s2f3: "Shopify / WooCommerce Frontend Dev",
+                s2f4: "Speed & Core Web Vitals Optimization",
+                s2Cta: "Start Implementation",
+                s3Title: "Monthly Growth Retainer",
+                s3Desc: "Continuous experimentation, hypothesis testing, and conversion rate optimization to scale lifetime profits.",
+                s3f1: "Continuous A/B & Multivariate Testing",
+                s3f2: "Personalization & Segmentation Strategy",
+                s3f3: "Weekly Analytics Reports & Strategic Calls",
+                s3f4: "Dedicated CRO Strategist & Engineers",
+                s3Cta: "Explore Retainer",
+                methodHeading: "The VRAXON GROWTH SYSTEM™",
+                methodSubheading: "A rigorous 5-step scientific methodology designed to eliminate guesswork and deliver measurable ROI.",
+                m1Title: "Diagnose", m1Desc: "Audit analytics, event tracking, heatmaps, and user recordings.",
+                m2Title: "Identify", m2Desc: "Pinpoint major friction points and form data-driven hypotheses.",
+                m3Title: "Strategize", m3Desc: "Prioritize tests based on Potential, Importance, and Ease (PIE).",
+                m4Title: "Optimize", m4Desc: "Design, code, and deploy controlled A/B experiments.",
+                m5Title: "Measure", m5Desc: "Analyze statistical significance, deploy winners, and iterate.",
+                casesPre: "Proven Impact",
+                casesHeading: "Real Results for Real Stores",
+                casesSubheading: "See how our CRO methodology transforms conversion rates and drives bottom-line growth.",
+                cs1Title: "High-End Fashion Brand Re-Architects Mobile PDP",
+                cs1Desc: "Simplified image galleries, added sticky add-to-cart buttons, and streamlined checkout trust signals.",
+                cs2Title: "Supplement Store Optimizes Checkout Funnel",
+                cs2Desc: "Replaced multi-page checkout with a single-step accordion and integrated instant social proof reviews.",
+                csMetricCR: "CR Lift", csMetricAOV: "AOV Increase", csMetricAbandon: "Cart Drop",
+                toolPre: "Interactive Suite",
+                toolHeading: "Interactive CRO Demonstration Tools",
+                toolSubheading: "Experience our diagnostic tools firsthand. Test the slider, simulate heatmaps, and project your ROI.",
+                t1Title: "Before vs After UX Architecture Visualizer",
+                t1Desc: "Drag the handle to see how VRAXON re-architects low-converting layouts into optimized, frictionless stores.",
+                baBefore: "BEFORE (1.2% CR)", baAfter: "AFTER (3.8% CR)", baOptimized: "VRAXON Optimized",
+                baFrictionText: "Cluttered navigation & hidden call-to-actions",
+                baStickyButton: "1-CLICK EXPRESS CHECKOUT",
+                baTrustSignals: "Guaranteed 24-hr Shipping & 30-Day Money Back",
+                baReviews: "1,420+ Verified Customer Reviews",
+                baNote1: "High drop-off rate, no trust badges, slow mobile response",
+                baNote2: "Frictionless UX, sticky bar, social proof & fast checkout",
+                t2Title: "E-Commerce ROI & Net Profit Lift Calculator",
+                t2Desc: "Adjust your store metrics to project monthly revenue expansion with VRAXON CRO.",
+                calcTraffic: "Monthly Visitors", calcCR: "Current Conversion Rate (%)", calcAOV: "Average Order Value (AOV)", calcLift: "Expected CRO Lift (+%)",
+                calcCurrRev: "Current Monthly Rev", calcProjectedRev: "Projected Monthly Rev", calcAddedRev: "Additional Net Monthly Revenue: ",
+                t3Title: "Heatmap & Visitor Behavior Simulator",
+                t3Desc: "Switch between diagnostic heatmaps to see how we track user drop-offs and rage clicks.",
+                hmTabClick: "Click Heatmap", hmTabScroll: "Scrollmap", hmTabDrop: "Drop-off Points",
+                t4Title: "Custom CRO Scope & Timeline Builder",
+                t4Desc: "Select your desired optimizations to build your custom project scope and estimate delivery duration.",
+                scope1: "Full Funnel Mobile UX Audit", scope2: "High-Converting PDP & Cart Wireframes", scope3: "Shopify/WooCommerce Frontend Coding", scope4: "Checkout Speed & Core Web Vitals Fix",
+                scopeSummaryTitle: "Estimated Project Scope", scopeEstTimeline: "Delivery Timeline", scopeEstInvestment: "Total Estimated Investment", scopeBtn: "Lock In This Scope",
+                pricingPre: "Transparent Investment", pricingHeading: "Simple, Scalable Pricing Tiers", pricingSubheading: "Select the level of partnership that fits your store's stage. Rates update dynamically based on currency preference.",
+                p1Title: "Quick Friction Audit", p1Desc: "For stores wanting immediate wins and UX feedback.",
+                p2Title: "Full CRO Deep-Dive", p2Desc: "Comprehensive end-to-end analysis & wireframes.",
+                p3Badge: "Recommended", p3Title: "Turn-Key Implementation", p3Desc: "Full audit + custom store frontend development.",
+                p4Title: "Growth Retainer", p4Desc: "Continuous experimentation and scaling partnership.",
+                pricingStarting: "Starting flat rate", planSelect: "Select Plan",
+                pricingDisclaimer: "* Note: All pricing listed represents starting rates. Final scope and investment are finalized after store volume and technical audit evaluation.",
+                formTitle: "Claim Your Free CRO Video Review",
+                formSubtitle: "Our senior strategists will analyze your store and send a custom 15-minute video teardown within 48 hours.",
+                fName: "Full Name *", fEmail: "Work Email *", fPhone: "Phone / WhatsApp Number *", fUrl: "Store Website URL *", fPlatform: "E-Commerce Platform *",
+                fTraffic: "Monthly Visitors *", fRevenue: "Monthly Revenue *", fObjective: "Primary Goal *", fChallenge: "Current Biggest Conversion Bottleneck",
+                formSubmitBtn: "Submit Audit Request via Email",
+                footerTagline: "Enterprise CRO & E-Commerce Profit Scaling Agency. Driving data-backed growth for high-performing online stores.",
+                footerContactHeading: "Contact Us", footerSocialHeading: "Follow Us", footerLegalHeading: "Legal",
+                footerPrivacy: "Privacy Policy", footerTerms: "Terms of Service",
+                modalSuccTitle: "Request Received!", modalSuccBody: "Your audit details have been dispatched to contact.vraxoncro@gmail.com. Our team will contact you within 48 hours.", modalClose: "Close Window",
+                planModalSub: "Enter your store details to finalize request dispatch.", planModalSubmit: "Submit Plan Request"
+            },
+            fr: {
+                navServices: "Services",
+                navMethodology: "Méthodologie",
+                navToolkit: "Boîte à Outils CRO",
+                navCases: "Études de Cas",
+                navPricing: "Tarifs",
+                navCta: "Audit CRO Gratuit",
+                heroBadge: "Agence CRO E-Commerce Axée sur les Données",
+                heroTitle: "Transformez Votre Trafic en <span class=\"gradient-text\">Revenus Prédictibles</span>",
+                heroSubtitle: "Nous éliminons les frictions de conversion, optimisons les parcours utilisateurs et augmentons vos profits nets sans augmenter vos dépenses publicitaires.",
+                heroPrimaryCta: "Obtenir un Audit CRO Gratuit",
+                heroSecondaryCta: "Découvrir Nos Services",
+                metric1: "Augmentation Moyenne du Taux de Conversion",
+                metric2: "Revenu Client Suivi",
+                metric3: "Tests A/B Réalisés",
+                metric4: "Taux de Rétention Client",
+                problemHeading: "Pourquoi 97% des Visiteurs Quittent Votre Boutique",
+                problemSubheading: "Générer du trafic coûte cher. Si votre boutique souffre de ces 4 obstacles, augmenter le budget publicitaire ne fait que gaspiller vos marges.",
+                prob1Title: "Abandon de Panier Élevé",
+                prob1Desc: "Un processus de paiement complexe, des frais imprévus et le manque de badges de confiance font partir plus de 70% des acheteurs avant de payer.",
+                prob2Title: "Friction sur Mobile",
+                prob2Desc: "Un chargement lent et une navigation mobile difficile réduisent les conversions sur smartphone, d'où proviennent 80% des visites.",
+                prob3Title: "Proposition de Valeur Floue",
+                prob3Desc: "Des descriptions vagues et un manque de clarté sur les avantages produit augmentent le taux de rebond dans les 5 premières secondes.",
+                prob4Title: "Décisions Basées sur l'Intuition",
+                prob4Desc: "Refondre un site sans analyser les données et heatmaps perturbe souvent les flux de vente existants.",
+                servicesPre: "Nos Services",
+                servicesHeading: "Services CRO Conçus pour la Croissance E-Commerce",
+                servicesSubheading: "De l'audit rapide à la gestion complète des expérimentations, nous apportons des solutions concrètes pour débloquer votre profit.",
+                s1Title: "Audit CRO Complet",
+                s1Desc: "Analyse approfondie de l'ensemble de votre tunnel pour identifier les points de friction et opportunités manquées.",
+                s1f1: "Analyse Complète de l'Entonnoir & Analytics",
+                s1f2: "Analyse des Cartes de Chaleur (Heatmaps) et Sessions",
+                s1f3: "Évaluation Heuristique UX & UI",
+                s1f4: "Feuille de Route Priorisée (Méthode PIE)",
+                s1Cta: "Demander un Audit",
+                s2Badge: "Le Plus Populaire",
+                s2Title: "Mise en Œuvre CRO",
+                s2Desc: "Concrétisez les recommandations d'audit avec un design optimisé, du copywriting et un déploiement technique sur votre boutique.",
+                s2f1: "Maquettes PDP et Panier à Haute Conversion",
+                s2f2: "Refonte UX Orientée Mobile-First",
+                s2f3: "Développement Frontend Shopify / WooCommerce",
+                s2f4: "Optimisation de la Vitesse et Core Web Vitals",
+                s2Cta: "Lancer la Mise en Œuvre",
+                s3Title: "Accompagnement Mensuel",
+                s3Desc: "Expérimentation continue, tests d'hypothèses et optimisation constante du taux de conversion.",
+                s3f1: "Tests A/B & Multivariés Continus",
+                s3f2: "Stratégie de Personnalisation et Segmentation",
+                s3f3: "Rapports Hebdomadaires et Appels Stratégiques",
+                s3f4: "Stratège CRO et Développeurs Dédiés",
+                s3Cta: "Découvrir l'Accompagnement",
+                methodHeading: "Le Système VRAXON GROWTH™",
+                methodSubheading: "Une méthodologie scientifique en 5 étapes pour éliminer les incertitudes et générer un ROI mesurable.",
+                m1Title: "Diagnostiquer", m1Desc: "Analyser les analytics, événements, heatmaps et enregistrements.",
+                m2Title: "Identifier", m2Desc: "Cibler les points de friction et formuler des hypothèses clés.",
+                m3Title: "Prioriser", m3Desc: "Classer les tests selon le potentiel, l'importance et la facilité (PIE).",
+                m4Title: "Optimiser", m4Desc: "Concevoir, coder et déployer des tests A/B contrôlés.",
+                m5Title: "Mesurer", m5Desc: "Valider la significativité statistique, déployer les gagnants et itérer.",
+                casesPre: "Impact Prouvé",
+                casesHeading: "Résultats Concrets pour nos Clients",
+                casesSubheading: "Découvrez comment notre approche CRO transforme les taux de conversion et accélère la croissance.",
+                cs1Title: "Une Marque de Mode Optimise sa Fiche Produit Mobile",
+                cs1Desc: "Simplification de la galerie d'images, ajout d'un bouton d'ajout au panier fixe et renforcement de la réassurance au paiement.",
+                cs2Title: "Une Marque de Compléments Optimise son Tunnel de Paiement",
+                cs2Desc: "Remplacement du paiement multi-étapes par un accordéon fluide et intégration d'avis clients en temps réel.",
+                csMetricCR: "Gain CR", csMetricAOV: "Hausse Panier", csMetricAbandon: "Baisse Abandons",
+                toolPre: "Suite Interactive",
+                toolHeading: "Outils Démo d'Analyse CRO",
+                toolSubheading: "Testez nos outils de diagnostic : utilisez le comparateur visualiseur, simulez les heatmaps et calculez votre ROI.",
+                t1Title: "Visualiseur d'Architecture UX Avant / Après",
+                t1Desc: "Faites glisser le curseur pour voir comment VRAXON transforme un site standard en une boutique fluide et optimisée.",
+                baBefore: "AVANT (1.2% CR)", baAfter: "APRÈS (3.8% CR)", baOptimized: "Optimisé par VRAXON",
+                baFrictionText: "Navigation chargée et appels à l'action peu visibles",
+                baStickyButton: "PAIEMENT EXPRESS EN 1 CLIC",
+                baTrustSignals: "Livraison 24h & Garantie Satisfait ou Remboursé",
+                baReviews: "+1 420 Avis Clients Vérifiés",
+                baNote1: "Abandon élevé, manque de réassurance, lenteur mobile",
+                baNote2: "Parcours fluide, bouton fixe, preuve sociale & paiement rapide",
+                t2Title: "Calculateur de ROI & Profit Net E-Commerce",
+                t2Desc: "Ajustez vos métriques pour projeter la croissance de votre chiffre d'affaires avec VRAXON.",
+                calcTraffic: "Visiteurs Mensuels", calcCR: "Taux de Conversion Actuel (%)", calcAOV: "Panier Moyen (AOV)", calcLift: "Gain CRO Espéré (+%)",
+                calcCurrRev: "CA Mensuel Actuel", calcProjectedRev: "CA Mensuel Projeté", calcAddedRev: "Revenu Mensuel Net Supplémentaire : ",
+                t3Title: "Simulateur d'Analyse de Comportement (Heatmap)",
+                t3Desc: "Alternez entre les cartes de chaleur pour voir comment nous détectons les zones de déperdition.",
+                hmTabClick: "Carte de Clics", hmTabScroll: "Carte de Défilement", hmTabDrop: "Points d'Abandon",
+                t4Title: "Configurateur de Projet & Estimation de Délai",
+                t4Desc: "Sélectionnez les optimisations souhaitées pour obtenir une estimation personnalisée du délai et du budget.",
+                scope1: "Audit UX Mobile Entier Entonnoir", scope2: "Maquettes Fiche Produit & Panier", scope3: "Intégration Code Shopify/WooCommerce", scope4: "Optimisation Vitesse & Core Web Vitals",
+                scopeSummaryTitle: "Résumé de la Mission", scopeEstTimeline: "Délai d'Exécution", scopeEstInvestment: "Investissement Total Estimé", scopeBtn: "Valider cette Configuration",
+                pricingPre: "Investissement Transparent", pricingHeading: "Tarifs Simples et Adaptés", pricingSubheading: "Choisissez le niveau d'accompagnement adapté à votre boutique. Les tarifs s'ajustent selon la devise sélectionnée.",
+                p1Title: "Audit Rapide de Friction", p1Desc: "Pour obtenir un diagnostic rapide et des recommandations UX immédiatement applicables.",
+                p2Title: "Audit CRO Approfondi", p2Desc: "Analyse complète de l'entonnoir et recommandations graphiques détaillées.",
+                p3Badge: "Recommandé", p3Title: "Clé en Main (Audit + Dev)", p3Desc: "Audit complet, maquettes et intégration technique sur votre boutique.",
+                p4Title: "Accompagnement Continu", p4Desc: "Partenariat continu d'expérimentation et d'optimisation.",
+                pricingStarting: "Tarif indicatif de départ", planSelect: "Choisir ce Plan",
+                pricingDisclaimer: "* Remarque : Les tarifs indiqués sont des montants de départ. Le devis final est établi après analyse du volume et de la complexité technique de la boutique.",
+                formTitle: "Demandez Votre Audit Vidéo Gratuit",
+                formSubtitle: "Nos experts analyseront votre boutique et vous enverront une vidéo d'analyse personnalisée sous 48 heures.",
+                fName: "Nom Complet *", fEmail: "E-mail Professionnel *", fPhone: "Téléphone / WhatsApp *", fUrl: "Lien de la Boutique *", fPlatform: "Plateforme E-Commerce *",
+                fTraffic: "Visiteurs Mensuels *", fRevenue: "Chiffre d'Affaires Mensuel *", fObjective: "Objectif Principal *", fChallenge: "Principal Obstacle Actuel",
+                formSubmitBtn: "Envoyer la Demande par E-mail",
+                footerTagline: "Agence CRO & Croissance E-Commerce. Nous transformons vos données en rentabilité durable.",
+                footerContactHeading: "Contact", footerSocialHeading: "Suivez-nous", footerLegalHeading: "Mentions Légales",
+                footerPrivacy: "Politique de Confidentialité", footerTerms: "Conditions Générales",
+                modalSuccTitle: "Demande Transmise !", modalSuccBody: "Vos informations ont été envoyées avec succès à contact.vraxoncro@gmail.com. Notre équipe vous recontactera sous 48h.", modalClose: "Fermer la Fenêtre",
+                planModalSub: "Renseignez vos coordonnées pour valider l'envoi de votre demande.", planModalSubmit: "Envoyer la Demande"
+            }
+        };
+
+        let currentLang = localStorage.getItem('vraxon_lang') || 'en';
+        let currentCurrency = localStorage.getItem('vraxon_currency') || 'MAD';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('vraxon_lang', lang);
+            document.getElementById('lang-label').textContent = lang.toUpperCase();
+            
+            // Translate all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang] && i18n[lang][key]) {
+                    el.innerHTML = i18n[lang][key];
+                }
+            });
+
+            updatePricingCurrencyDisplay();
+            updateScopeTotal();
+        }
+
+        function toggleLanguage() {
+            setLanguage(currentLang === 'en' ? 'fr' : 'en');
+        }
+
+        // 2. CURRENCY CONVERSION & PRICING TOGGLE
+        function toggleCurrency() {
+            currentCurrency = currentCurrency === 'MAD' ? 'USD' : 'MAD';
+            localStorage.setItem('vraxon_currency', currentCurrency);
+            document.getElementById('currency-label').textContent = currentCurrency === 'MAD' ? 'MAD (DH)' : 'USD ($)';
+            updatePricingCurrencyDisplay();
+            updateScopeTotal();
+        }
+
+        function updatePricingCurrencyDisplay() {
+            document.querySelectorAll('.p-price').forEach(el => {
+                const priceVal = currentCurrency === 'MAD' ? el.getAttribute('data-mad') : el.getAttribute('data-usd');
+                el.textContent = priceVal;
+            });
+            document.querySelectorAll('.scope-price-tag').forEach((el, idx) => {
+                const item = document.querySelectorAll('.scope-item')[idx];
+                if (item) {
+                    const price = currentCurrency === 'MAD' 
+                        ? `${parseInt(item.getAttribute('data-price-mad')).toLocaleString()} DH`
+                        : `$${item.getAttribute('data-price-usd')}`;
+                    el.textContent = `+${price}`;
+                }
+            });
+        }
+
+        // 3. DARK / LIGHT MODE SWITCHER
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('vraxon_theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('vraxon_theme', 'dark');
+            }
+        }
+
+        // Init theme state
+        if (localStorage.getItem('vraxon_theme') === 'dark' || (!('vraxon_theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // 4. BEFORE / AFTER SLIDER TOUCH & MOUSE INTERACTION
+        const sliderContainer = document.getElementById('before-after-slider');
+        const afterPanel = document.getElementById('after-panel');
+        const dragHandle = document.getElementById('drag-handle');
+        let isDragging = false;
+
+        function updateSliderPosition(x) {
+            const rect = sliderContainer.getBoundingClientRect();
+            let positionX = x - rect.left;
+            if (positionX < 0) positionX = 0;
+            if (positionX > rect.width) positionX = rect.width;
+            
+            const percentage = (positionX / rect.width) * 100;
+            afterPanel.style.width = `${percentage}%`;
+            dragHandle.style.left = `${percentage}%`;
+        }
+
+        sliderContainer.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            updateSliderPosition(e.clientX);
+        });
+
+        sliderContainer.addEventListener('touchstart', () => isDragging = true);
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            updateSliderPosition(e.touches[0].clientX);
+        });
+
+        // 5. CHART.JS REAL-TIME ROI CALCULATOR
+        let roiChart;
+        function initRoiChart() {
+            const ctx = document.getElementById('roiChart').getContext('2d');
+            roiChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Current Revenue', 'Projected Revenue'],
+                    datasets: [{
+                        label: 'Monthly Revenue ($)',
+                        data: [45000, 58500],
+                        backgroundColor: ['#64748b', '#10b981'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148, 163, 184, 0.1)' } },
+                        x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function calculateROI() {
+            const traffic = parseInt(document.getElementById('input-traffic').value);
+            const cr = parseFloat(document.getElementById('input-cr').value);
+            const aov = parseFloat(document.getElementById('input-aov').value);
+            const lift = parseFloat(document.getElementById('input-lift').value);
+
+            document.getElementById('val-traffic').textContent = traffic.toLocaleString();
+            document.getElementById('val-cr').textContent = cr.toFixed(1) + '%';
+            document.getElementById('val-aov').textContent = '$' + aov;
+            document.getElementById('val-lift').textContent = '+' + lift + '%';
+
+            const currOrders = traffic * (cr / 100);
+            const currRev = currOrders * aov;
+            
+            const newCr = cr * (1 + (lift / 100));
+            const projOrders = traffic * (newCr / 100);
+            const projRev = projOrders * aov;
+            const netGain = projRev - currRev;
+
+            document.getElementById('display-curr-rev').textContent = '$' + Math.round(currRev).toLocaleString();
+            document.getElementById('display-proj-rev').textContent = '$' + Math.round(projRev).toLocaleString();
+            document.getElementById('display-net-gain').textContent = '+$' + Math.round(netGain).toLocaleString() + '/mo';
+
+            if (roiChart) {
+                roiChart.data.datasets[0].data = [Math.round(currRev), Math.round(projRev)];
+                roiChart.update();
+            }
+        }
+
+        ['traffic', 'cr', 'aov', 'lift'].forEach(id => {
+            document.getElementById(`input-${id}`).addEventListener('input', calculateROI);
+        });
+
+        // 6. HEATMAP SIMULATOR TAB SWITCHER
+        const heatmapData = {
+            click: {
+                badge: "Rage Click Hotspot Detected",
+                title: "74% of Clicks Hitting Unclickable Image Banner",
+                desc: "Users expect the promo graphic to open the product link directly. Adding link triggers instantly captures lost intent."
+            },
+            scroll: {
+                badge: "50% Drop-Off Before Value Section",
+                title: "Half of Mobile Visitors Stop Scrolling After Hero Section",
+                desc: "Moving key benefits and reviews above the fold increases engagement depth and overall session duration."
+            },
+            dropoff: {
+                badge: "Critical Checkout Leak",
+                title: "62% Cart Abandonment at Address Input",
+                desc: "Lack of automatic address autocomplete causes form fatigue. Streamlining input fields restores checkout completions."
+            }
+        };
+
+        function setHeatmapTab(tab) {
+            ['click', 'scroll', 'dropoff'].forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === tab) {
+                    btn.className = "py-2 px-4 text-xs font-bold border-b-2 border-brand-600 text-brand-600 dark:text-brand-accent";
+                } else {
+                    btn.className = "py-2 px-4 text-xs font-bold text-slate-500 border-b-2 border-transparent hover:text-slate-800 dark:hover:text-slate-200";
+                }
+            });
+
+            const data = heatmapData[tab];
+            document.getElementById('hm-badge').textContent = data.badge;
+            document.getElementById('hm-title').textContent = data.title;
+            document.getElementById('hm-desc').textContent = data.desc;
+        }
+
+        // 7. SCOPE BUILDER CALCULATOR
+        function updateScopeTotal() {
+            let totalDays = 0;
+            let totalMAD = 0;
+            let totalUSD = 0;
+
+            document.querySelectorAll('.scope-item').forEach(checkbox => {
+                if (checkbox.checked) {
+                    totalDays += parseInt(checkbox.getAttribute('data-days'));
+                    totalMAD += parseInt(checkbox.getAttribute('data-price-mad'));
+                    totalUSD += parseInt(checkbox.getAttribute('data-price-usd'));
+                }
+            });
+
+            document.getElementById('scope-timeline').textContent = `${totalDays} Business Days`;
+            document.getElementById('scope-total-price').textContent = currentCurrency === 'MAD' 
+                ? `${totalMAD.toLocaleString()} DH` 
+                : `$${totalUSD.toLocaleString()}`;
+        }
+
+        function presetScopeInForm() {
+            let selectedScopes = [];
+            document.querySelectorAll('.scope-item:checked').forEach(cb => {
+                selectedScopes.push(cb.nextElementSibling.textContent.trim());
+            });
+            document.getElementById('lead-challenge').value = `Selected Custom Scope: ${selectedScopes.join(', ')}`;
+        }
+
+        // 8. EMAIL LEAD DISPATCHING (DIRECT MAILTO ROUTING & MODAL CONFIRMATION)
+        function handleLeadSubmit(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('lead-name').value;
+            const email = document.getElementById('lead-email').value;
+            const phone = document.getElementById('lead-phone').value;
+            const url = document.getElementById('lead-url').value;
+            const platform = document.getElementById('lead-platform').value;
+            const traffic = document.getElementById('lead-traffic').value;
+            const revenue = document.getElementById('lead-revenue').value;
+            const objective = document.getElementById('lead-objective').value;
+            const challenge = document.getElementById('lead-challenge').value;
+
+            const subject = encodeURIComponent(`New CRO Review Request - ${name} (${url})`);
+            const body = encodeURIComponent(
+                `VRAXON CRO REVIEW REQUEST DETAILS:\n\n` +
+                `Full Name: ${name}\n` +
+                `Work Email: ${email}\n` +
+                `Phone/WhatsApp: ${phone}\n` +
+                `Website URL: ${url}\n` +
+                `Platform: ${platform}\n` +
+                `Monthly Traffic: ${traffic}\n` +
+                `Monthly Revenue: ${revenue}\n` +
+                `Primary Objective: ${objective}\n` +
+                `Conversion Challenge/Notes: ${challenge}\n`
+            );
+
+            // Open mail client with formatted payload to contact.vraxoncro@gmail.com
+            window.location.href = `mailto:contact.vraxoncro@gmail.com?subject=${subject}&body=${body}`;
+
+            // Display UI confirmation modal
+            document.getElementById('success-modal').classList.remove('hidden');
+            document.getElementById('cro-review-form').reset();
+        }
+
+        function handlePlanSubmit(e) {
+            e.preventDefault();
+            const plan = document.getElementById('selected-plan-input').value;
+            const name = document.getElementById('plan-name').value;
+            const url = document.getElementById('plan-url').value;
+            const email = document.getElementById('plan-email').value;
+
+            const subject = encodeURIComponent(`Plan Selection Inquiry - ${plan}`);
+            const body = encodeURIComponent(
+                `PLAN SELECTION DETAILS:\n\n` +
+                `Selected Tier: ${plan}\n` +
+                `Client Name: ${name}\n` +
+                `Store Website: ${url}\n` +
+                `Contact Email: ${email}\n`
+            );
+
+            window.location.href = `mailto:contact.vraxoncro@gmail.com?subject=${subject}&body=${body}`;
+
+            closePlanModal();
+            document.getElementById('success-modal').classList.remove('hidden');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+
+        function openModalWithPlan(planName) {
+            document.getElementById('selected-plan-input').value = planName;
+            document.getElementById('plan-modal-title').textContent = `Request: ${planName}`;
+            document.getElementById('plan-modal').classList.remove('hidden');
+        }
+
+        function closePlanModal() {
+            document.getElementById('plan-modal').classList.add('hidden');
+        }
+
+        // 9. LEGAL POLICY MODALS
+        function openPolicyModal(type) {
+            const modal = document.getElementById('policy-modal');
+            const title = document.getElementById('policy-modal-title');
+            const body = document.getElementById('policy-modal-body');
+
+            if (type === 'privacy') {
+                title.textContent = currentLang === 'fr' ? 'Politique de Confidentialité' : 'Privacy Policy';
+                body.innerHTML = `
+                    <p>At VRAXON Growth Agency, we respect your privacy. All store URL data, analytics metrics, and contact details collected through our audit forms are strictly used to prepare conversion diagnostics.</p>
+                    <p>We do not share, sell, or disclose client audit data or e-commerce revenue figures to third parties. All lead details are routed directly to <strong>contact.vraxoncro@gmail.com</strong>.</p>
+                `;
+            } else {
+                title.textContent = currentLang === 'fr' ? 'Conditions Générales de Service' : 'Terms of Service';
+                body.innerHTML = `
+                    <p>All diagnostic estimates, ROI projection tools, and scope calculations provided on this portal serve as preliminary baseline evaluations.</p>
+                    <p>Formal service commitments, deliverables, timelines, and payment guarantees are subject to custom bilateral contracts executed directly between VRAXON and the client entity.</p>
+                `;
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closePolicyModal() {
+            document.getElementById('policy-modal').classList.add('hidden');
+        }
+
+        // 10. INITIALIZATION ON WINDOW LOAD
+        window.onload = function() {
+            setLanguage(currentLang);
+            initRoiChart();
+            calculateROI();
+            updateScopeTotal();
+        };
+    </script>
+</body>
+</html>
